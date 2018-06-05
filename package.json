@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "bull": "^3.4.2"
+    "body-parser": "^1.18.3",
+    "bull": "^3.4.2",
+    "express": "^4.16.3"
   }
 }

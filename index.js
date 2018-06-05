@@ -1,4 +1,9 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 const Queue = require('bull');
+
+app.use(bodyParser.json());
 
 const redisSettings = { redis: { port: 6379, host: '127.0.0.1' } };
 
@@ -37,4 +42,12 @@ testQueue.on('completed', (job, result) => {
 	console.log(`Job ID: ${job.id} completed with result: ${result.data}`);
 });
 
-testQueue.add({ message: 'AWE!' });
+app.post('/message', function(req, res) {
+	testQueue.add({ message: req.body.message });
+
+	res.json({
+		result: 'Message dropped on queue'
+	});
+});
+
+app.listen(3000, () => console.log('Listening on port 3000'));
